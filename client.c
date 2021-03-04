@@ -74,12 +74,19 @@ int main(int argc, char *argv[])
 		printf("Failed to connect to server, exiting...\n");
         exit(0);
     }
-	FILE *fileToSend;
-    fileToSend = fopen("filetosendforencryption.txt", "r");
+	//FILE *fileToSend;
+  //fileToSend = fopen("filetosendforencryption.txt", "r");
 
-	send_file(fileToSend, socketState);
-	printf("File sent\n");
+  char buffer[1024];
+  FILE *f;
+  f=fopen("filetosendforencryption.txt","r");
+  fscanf(f,"%s",buffer);
+  write(socketState,buffer,1024);
+  printf("the file was sent successfully");
+
+	//send_file(fileToSend, socketState);
+	//printf("File sent\n");
 	
-	write_file(socketState);
-	printf("Encrypted file received\n");
+	//write_file(socketState);
+	//printf("Encrypted file received\n");
 }

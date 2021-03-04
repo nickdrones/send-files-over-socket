@@ -76,9 +76,16 @@ int main(int argc, char *argv[])
         int listenState1=listen(socketState1, 5);
         int acceptConnection1=accept(socketState1,(struct sockaddr *)&serverParameters1,(socklen_t*)&addrlen1);
 
-        write_file(acceptConnection1);
+        //write_file(acceptConnection1);
 
-        printf("Received file, encrypting now\n");
+        //printf("Received file, encrypting now\n");
+        char buffer[1024];
+      FILE *fp;
+      read(acceptConnection1,buffer,1024);
+      fp=fopen("recv.txt","w");
+      fprintf(fp,"%s",buffer);
+      printf("the file was received successfully");
+        return 0;
 
         encryptFile();
 
