@@ -14,7 +14,7 @@ void send_file(FILE *fp, int sockfd){
 
   while(fgets(data, 1024, fp) != NULL) {
     if (send(sockfd, data, sizeof(data), 0) == -1) {
-      perror("[-]Error in sending file.");
+      perror("Error in sending file.");
       exit(1);
     }
     bzero(data, 1024);
