@@ -80,9 +80,12 @@ int main(int argc, char *argv[])
   char buffer[1024];
   FILE *f;
   f=fopen("filetosendforencryption.txt","r");
-  fscanf(f,"%s",buffer);
+  while(fgets(buffer, 1024, f)){
+    int a=1;
+  }
+  fclose(f);
   write(socketState,buffer,1024);
-  printf("the file was sent successfully");
+  printf("the file was sent successfully\n");
 
 	//send_file(fileToSend, socketState);
 	//printf("File sent\n");

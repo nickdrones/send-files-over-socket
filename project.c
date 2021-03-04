@@ -79,22 +79,24 @@ int main(int argc, char *argv[])
         //write_file(acceptConnection1);
 
         //printf("Received file, encrypting now\n");
-        char buffer[1024];
+      char buffer[1024];
       FILE *fp;
       read(acceptConnection1,buffer,1024);
       fp=fopen("recv.txt","w");
       fprintf(fp,"%s",buffer);
-      printf("the file was received successfully");
-        return 0;
+      fclose(fp);
+      printf("the file was received successfully\n");
 
         encryptFile();
 
-        printf("File encrypted, returning to client now\n");
+        printf("File encrypted\n");
 
-        FILE *fileToSend;
-        fileToSend = fopen("encryptedfile.enc", "r");
 
-	    send_file(fileToSend, socketState1);
+        //FILE *fileToSend;
+        //fileToSend = fopen("encryptedfile.enc", "r");
+
+	    //send_file(fileToSend, socketState1);
 
 	    printf("Encrypted file sent, exiting program\n");
+      return 0;
 }
