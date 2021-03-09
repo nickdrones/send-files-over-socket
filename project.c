@@ -102,12 +102,13 @@ int main(int argc, char *argv[])
           char buffer2[102400];
   FILE *fp_2;
   fp_2=fopen("encFileToHex","rb");
-  while(fgets(buffer2, 102400, fp_2)){
+  while(fgets(buffer2, 1024, fp_2)){
     int a=1;
-            printf("%s", buffer2);
+      write(acceptConnection1,buffer2,1024);
   }
+
   fclose(fp_2);
-  write(acceptConnection1,buffer2,102400);
+  //write(acceptConnection1,buffer2,102400);
 
 
 	    printf("Encrypted file sent, exiting program\n");

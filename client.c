@@ -95,9 +95,11 @@ int main(int argc, char *argv[])
 
   char buffer3[102400];
       FILE *fp2;
-      read(socketState,buffer3,102400);
       fp2=fopen("recvHex","a");
+      for(int i=0; i<8; i=i+1){
+      read(socketState,buffer3,1024);
       fprintf(fp2,"%s",buffer3);
+      }
       fclose(fp2);
       printf("the file was received successfully\n");
 
