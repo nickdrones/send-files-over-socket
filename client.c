@@ -23,7 +23,13 @@ void send_file(FILE *fp, int sockfd){
 
 void reversehexdumpFile()
 {
-    char *hexdump_command = "xxd -r recvHex > receivedEncFile.enc";
+    char *hexdump_command = "xxd -r receivedHex_noDupeLines > receivedEncFile.enc";
+    system(hexdump_command);
+}
+
+void removeDuplicateLines()
+{
+    char *hexdump_command = "uniq recvHex > receivedHex_noDupeLines";
     system(hexdump_command);
 }
 
@@ -102,6 +108,8 @@ int main(int argc, char *argv[])
       }
       fclose(fp2);
       printf("the file was received successfully\n");
+
+removeDuplicateLines();
 
       reversehexdumpFile();
 
