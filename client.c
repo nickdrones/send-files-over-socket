@@ -21,6 +21,12 @@ void send_file(FILE *fp, int sockfd){
   }
 }
 
+void reversehexdumpFile()
+{
+    char *hexdump_command = "xxd -r recvHex > receivedEncFile.enc";
+    system(hexdump_command);
+}
+
 void write_file(int sockfd){
   int n;
   FILE *fp;
@@ -86,6 +92,16 @@ int main(int argc, char *argv[])
   fclose(f);
   write(socketState,buffer,1024);
   printf("the file was sent successfully\n");
+
+  char buffer3[102400];
+      FILE *fp2;
+      read(socketState,buffer3,102400);
+      fp2=fopen("recvHex","a");
+      fprintf(fp2,"%s",buffer3);
+      fclose(fp2);
+      printf("the file was received successfully\n");
+
+      reversehexdumpFile();
 
 	//send_file(fileToSend, socketState);
 	//printf("File sent\n");

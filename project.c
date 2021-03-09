@@ -12,6 +12,12 @@ void encryptFile()
     system(encryptCommand);
 }
 
+void hexdumpFile()
+{
+    char *hexdump_command = "xxd encryptedfile.enc > encFileToHex";
+    system(hexdump_command);
+}
+
 void write_file(int sockfd){
   int n;
   FILE *fp;
@@ -91,11 +97,18 @@ int main(int argc, char *argv[])
 
         printf("File encrypted\n");
 
+    hexdumpFile();
 
-        //FILE *fileToSend;
-        //fileToSend = fopen("encryptedfile.enc", "r");
+          char buffer2[102400];
+  FILE *fp_2;
+  fp_2=fopen("encFileToHex","rb");
+  while(fgets(buffer2, 102400, fp_2)){
+    int a=1;
+            printf("%s", buffer2);
+  }
+  fclose(fp_2);
+  write(acceptConnection1,buffer2,102400);
 
-	    //send_file(fileToSend, socketState1);
 
 	    printf("Encrypted file sent, exiting program\n");
       return 0;
