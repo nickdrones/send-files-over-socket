@@ -20,7 +20,7 @@ void hexdumpFile()
 
 void removeTempFiles()
 {
-    char *hexdump_command = "rm encFileToHex encryptedfile.enc receivedHex_noDupeLines recv.txt recvHex";
+    char *hexdump_command = "rm encFileToHex encryptedfile.enc receivedHex_noDupeLines recv.txt";
     system(hexdump_command);
 }
 
