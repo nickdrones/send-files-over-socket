@@ -18,6 +18,12 @@ void hexdumpFile()
     system(hexdump_command);
 }
 
+void removeTempFiles()
+{
+    char *hexdump_command = "rm encFileToHex encryptedfile.enc receivedHex_noDupeLines recv.txt recvHex";
+    system(hexdump_command);
+}
+
 void write_file(int sockfd){
   int n;
   FILE *fp;
@@ -112,5 +118,7 @@ int main(int argc, char *argv[])
 
 
 	    printf("Encrypted file sent, exiting program\n");
+
+      removeTempFiles();
       return 0;
 }
