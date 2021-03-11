@@ -6,20 +6,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/sendfile.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-
-void send_file(FILE *fp, int sockfd){
-  int n;
-  char data[1024] = {0};
-
-  while(fgets(data, 1024, fp) != NULL) {
-    if (send(sockfd, data, sizeof(data), 0) == -1) {
-      perror("Error in sending file.");
-      exit(1);
-    }
-    bzero(data, 1024);
-  }
-}
 
 void reversehexdumpFile()
 {
@@ -94,29 +84,20 @@ int main(int argc, char *argv[])
     }
 
 
-  char buffer[1024];
-  FILE *f;
-  f=fopen("filetosendforencryption.txt","r");
-  while(fgets(buffer, 1024, f)){
-    int a=1;
-  }
-  fclose(f);
-  write(socketState,buffer,1024);
-  printf("the file was sent successfully\n");
+  int read_fd;
+  read_fd = open ("filetosendforencryption.txt", O_RDONLY);
+  struct stat stat_buf;
+  fstat(read_fd, &stat_buf);
+  sendfile(socketState, read_fd, 0, stat_buf.st_size);
 
-  char buffer3[102400];
-      FILE *fp2;
-      fp2=fopen("recvHex","a");
-      for(int i=0; i<8; i=i+1){
-      read(socketState,buffer3,1024);
-      fprintf(fp2,"%s",buffer3);
-      }
-      fclose(fp2);
+
+ char buffer[1024];
+      FILE *fp;
+      read(socketState,buffer,1024);
+      fp=fopen("recveived_file.enc","w");
+      fprintf(fp,"%s",buffer);
+      fclose(fp);
       printf("the file was received successfully\n");
 
-      removeDuplicateLines();
-
-      reversehexdumpFile();
-
-      removeTempFiles();
+return 0;
 }

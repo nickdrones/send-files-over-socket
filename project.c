@@ -5,6 +5,11 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/sendfile.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 void encryptFile()
 {
@@ -91,6 +96,9 @@ int main(int argc, char *argv[])
         //write_file(acceptConnection1);
 
         //printf("Received file, encrypting now\n");
+
+
+
       char buffer[1024];
       FILE *fp;
       read(acceptConnection1,buffer,1024);
@@ -103,22 +111,12 @@ int main(int argc, char *argv[])
 
         printf("File encrypted\n");
 
-    hexdumpFile();
+      int read_fd;
+      read_fd = open ("encryptedfile.enc", O_RDONLY);
+      struct stat stat_buf;
+      fstat(read_fd, &stat_buf);
+      sendfile(acceptConnection1, read_fd, 0, stat_buf.st_size);
 
-          char buffer2[102400];
-  FILE *fp_2;
-  fp_2=fopen("encFileToHex","rb");
-  while(fgets(buffer2, 1024, fp_2)){
-    int a=1;
-      write(acceptConnection1,buffer2,1024);
-  }
+        return 0;
 
-  fclose(fp_2);
-  //write(acceptConnection1,buffer2,102400);
-
-
-	    printf("Encrypted file sent, exiting program\n");
-
-      removeTempFiles();
-      return 0;
 }
