@@ -33,12 +33,6 @@ void removeDuplicateLines()
     system(hexdump_command);
 }
 
-void removeTempFiles()
-{
-    char *hexdump_command = "rm encFileToHex encryptedfile.enc receivedHex_noDupeLines recv.txt recvHex";
-    system(hexdump_command);
-}
-
 void write_file(int sockfd){
   int n;
   FILE *fp;
@@ -92,7 +86,8 @@ int main(int argc, char *argv[])
 		printf("Failed to connect to server, exiting...\n");
         exit(0);
     }
-
+	//FILE *fileToSend;
+  //fileToSend = fopen("filetosendforencryption.txt", "r");
 
   char buffer[1024];
   FILE *f;
@@ -114,9 +109,13 @@ int main(int argc, char *argv[])
       fclose(fp2);
       printf("the file was received successfully\n");
 
-      removeDuplicateLines();
+removeDuplicateLines();
 
       reversehexdumpFile();
 
-      removeTempFiles();
+	//send_file(fileToSend, socketState);
+	//printf("File sent\n");
+	
+	//write_file(socketState);
+	//printf("Encrypted file received\n");
 }
