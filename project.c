@@ -17,51 +17,6 @@ void encryptFile()
     system(encryptCommand);
 }
 
-void hexdumpFile()
-{
-    char *hexdump_command = "xxd encryptedfile.enc > encFileToHex";
-    system(hexdump_command);
-}
-
-void removeTempFiles()
-{
-    char *hexdump_command = "rm encFileToHex encryptedfile.enc receivedHex_noDupeLines recv.txt";
-    system(hexdump_command);
-}
-
-void write_file(int sockfd){
-  int n;
-  FILE *fp;
-  char *filename = "recv.txt";
-  char buffer[1024];
-
-  fp = fopen(filename, "w");
-  while (1) {
-    n = recv(sockfd, buffer, 1024, 0);
-    if (n <= 0){
-      break;
-      return;
-    }
-    fprintf(fp, "%s", buffer);
-    bzero(buffer, 1024);
-  }
-  return;
-}
-
-void send_file(FILE *fp, int sockfd){
-  int n;
-  char data[1024] = {0};
-
-  while(fgets(data, 1024, fp) != NULL) {
-    if (send(sockfd, data, sizeof(data), 0) == -1) {
-      perror("Error in sending file.");
-      exit(1);
-    }
-    bzero(data, 1024);
-  }
-}
-
-
 int main(int argc, char *argv[])
 {
         int firstPort=atoi(argv[1]);
@@ -92,10 +47,6 @@ int main(int argc, char *argv[])
 		//Listen for incoming connection and accept connection
         int listenState1=listen(socketState1, 5);
         int acceptConnection1=accept(socketState1,(struct sockaddr *)&serverParameters1,(socklen_t*)&addrlen1);
-
-        //write_file(acceptConnection1);
-
-        //printf("Received file, encrypting now\n");
 
 
 

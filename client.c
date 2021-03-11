@@ -10,44 +10,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
-void reversehexdumpFile()
-{
-    char *hexdump_command = "xxd -r receivedHex_noDupeLines > receivedEncFile.enc";
-    system(hexdump_command);
-}
-
-void removeDuplicateLines()
-{
-    char *hexdump_command = "uniq recvHex > receivedHex_noDupeLines";
-    system(hexdump_command);
-}
-
-void removeTempFiles()
-{
-    char *hexdump_command = "rm encFileToHex encryptedfile.enc receivedHex_noDupeLines recv.txt recvHex";
-    system(hexdump_command);
-}
-
-void write_file(int sockfd){
-  int n;
-  FILE *fp;
-  char *filename = "recvEncrypted.enc";
-  char buffer[1024];
-
-  fp = fopen(filename, "w");
-  while (1) {
-    n = recv(sockfd, buffer, 1024, 0);
-    if (n <= 0){
-      break;
-      return;
-    }
-    fprintf(fp, "%s", buffer);
-    bzero(buffer, 1024);
-  }
-  return;
-}
-
 int main(int argc, char *argv[])
 {
 	// ./client <ipaddr> <portnum>
