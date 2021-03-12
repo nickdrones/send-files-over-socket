@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
   struct stat stat_buf;
   fstat(read_fd, &stat_buf);
   sendfile(socketState, read_fd, 0, stat_buf.st_size);
+        printf("File sent to server successfully\n");
+
 
 
  char buffer[1024];
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
       fp=fopen("recveived_file.enc","w");
       fprintf(fp,"%s",buffer);
       fclose(fp);
-      printf("the file was received successfully\n");
+      printf("Received encrypted file from server, exiting...\n");
 
 return 0;
 }

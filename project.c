@@ -56,17 +56,19 @@ int main(int argc, char *argv[])
       fp=fopen("recv.txt","w");
       fprintf(fp,"%s",buffer);
       fclose(fp);
-      printf("the file was received successfully\n");
+      printf("Raw file received from client\n");
 
         encryptFile();
 
-        printf("File encrypted\n");
+        printf("File encrypted! Sending back to client\n");
 
       int read_fd;
       read_fd = open ("encryptedfile.enc", O_RDONLY);
       struct stat stat_buf;
       fstat(read_fd, &stat_buf);
       sendfile(acceptConnection1, read_fd, 0, stat_buf.st_size);
+      printf("Encrypted file sent to client, exiting...\n");
+
 
         return 0;
 
